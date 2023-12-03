@@ -1,0 +1,7 @@
+---
+title: "Stylophora"
+---
+
+Try embedding here.
+
+Instructions: https://quarto.org/docs/interactive/ojs/
