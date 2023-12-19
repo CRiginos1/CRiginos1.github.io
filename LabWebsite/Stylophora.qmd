@@ -1,7 +1,124 @@
 ---
 title: "Stylophora"
+output:
+  html:
+    self-contained: false
 ---
 
-Try embedding here.
+```{r, echo = FALSE, message=FALSE}
 
-Instructions: https://quarto.org/docs/interactive/ojs/
+# -----------------------------------------------------------------------------
+# LOAD LIBRARIES --------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
+library(adegenet)
+library(dartR)
+library(ggplot2)
+library(tidyverse)
+library(htmlwidgets)
+library(plotly)
+library(readxl)
+library(magick) ## for resizing images
+library(plotly) ## adding images
+
+# -----------------------------------------------------------------------------
+# LOAD DATA -------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
+all <- read_xlsx("~/Documents/RA_EcoRRAP/CRiginos1.github.io/LabWebsite/supporting_docs/Spis_interactive_plot_quarto.xlsx")
+
+# -----------------------------------------------------------------------------
+# CREATE PLOT -----------------------------------------------------------------
+# -----------------------------------------------------------------------------
+# dependency code
+# Create HTML dependency for the D3 library (version 7.3)
+d3 <- htmltools::htmlDependency(
+  "d3", "7.3.0",
+  src = c(file= "~/Documents/RA_EcoRRAP/CRiginos1.github.io/LabWebsite/supporting_docs"),  # Specify the source URL for D3 library
+  script = "d3.min.js",  # Specify the JavaScript file to load
+  all_files = FALSE
+)
+
+
+# javascript code 
+js <- 'function(el) {
+  // Create a tooltip div and assign it the "my-custom-tooltip" class
+  var tooltip = d3.select("#" + el.id + " .svg-container")
+    .append("div")
+    .attr("class", "my-custom-tooltip");
+
+  // Add an event listener for the "plotly_hover" event
+  el.on("plotly_hover", function(d) {
+    var pt = d.points[0];  // Get the first point of the hover event
+
+    // Set the desired x and y coordinates for the tooltip
+    var xPixel = 15; // Change this to 15
+    var yPixel = 6;  // Change this to 6
+
+    // Create an image tag with a custom data source and width
+    var img = "<img src=\\\"" +  pt.customdata + "\\\" width=250>";
+    tooltip.html(img)
+      .style("position", "absolute")
+      .style("right", xPixel + "px")
+      .style("top", yPixel + "px");
+
+    // Apply a transition to the tooltip (so that it fades in)
+    tooltip.transition()
+      .duration(300)
+      .style("opacity", 1);
+  });
+
+  // Add an event listener for the "plotly_unhover" event
+  el.on("plotly_unhover", function(d) {
+    // Apply a transition to hide the tooltip
+    tooltip.transition()
+      .duration(500)
+      .style("opacity", 0);
+  });
+}'
+
+
+# create uris (this locates the images so they can be used in the plot)
+uris <- purrr::map_chr(
+  all$New_sample_name, ~base64enc::dataURI(file = sprintf("~/Documents/RA_EcoRRAP/CRiginos1.github.io/LabWebsite/supporting_docs/Spis_images/%s.JPG", .x))
+)
+
+# plot figure
+fig <- plot_ly(
+  data = all,
+  x = ~PC1,
+  y = ~PC2,
+  color = ~Cluster,
+  colors = c("#834177", "#d23359", "#17697c", "#ba4b05", "#00652e", "#b99a2d"),
+  customdata = ~uris,
+  text = ~paste("Sample Name: ", all$New_sample_name, "<br>",
+                "Locality: ", all$locality, "<br>",
+                "Site: ", all$EcoLocationID_short, "<br>",
+                "Taxa: ", all$Cluster),
+  hovertemplate = paste0(
+    "<span style='fill:white;font-size:1em;'>%{text}</span><extra></extra>")
+) |>
+  layout(
+    xaxis = list(title = paste0("PC1 (%)"), 
+                 zeroline = FALSE, 
+                 titlefont = list(size = 15, weight = "bold", color = "black")),
+    yaxis = list(title = paste0("PC2 (%)"), 
+                 zeroline = FALSE, 
+                 titlefont = list(size = 15, weight = "bold", color = "black")),
+    legend = list(x = 15, y = 0.5, color = "black")
+  ) |>
+  add_markers(x = ~PC1, 
+              y = ~PC2, 
+              customdata = uris, 
+              marker = list(
+    size = 13,      # Set the size of the points (adjust as needed)
+    opacity = 0.7  # Set the opacity of the points (adjust as needed)
+  )) |>
+  htmlwidgets::onRender(js)
+
+# add dependencies
+fig$dependencies <- c(fig$dependencies, list(d3))
+
+# plot figure
+fig
+```
