@@ -12,12 +12,5 @@
     "title": "About",
     "section": "",
     "text": "About this site\n\n1 + 1\n\n[1] 2"
-  },
-  {
-    "objectID": "Stylophora.html",
-    "href": "Stylophora.html",
-    "title": "Stylophora",
-    "section": "",
-    "text": "Warning: Specifying width/height in layout() is now deprecated.\nPlease specify in ggplotly() or plot_ly()"
   }
 ]
