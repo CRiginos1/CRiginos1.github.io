@@ -25,7 +25,7 @@ library(plotly) ## adding images
 # LOAD DATA -------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 
-all <- read_xlsx("~/Documents/RA_EcoRRAP/CRiginos1.github.io/LabWebsite/supporting_docs/Spis_interactive_plot_quarto.xlsx")
+all <- read_xlsx("~/CRiginos1.github.io/LabWebsite/supporting_docs/Spis_interactive_plot_quarto.xlsx")
 
 # -----------------------------------------------------------------------------
 # CREATE PLOT -----------------------------------------------------------------
@@ -34,7 +34,7 @@ all <- read_xlsx("~/Documents/RA_EcoRRAP/CRiginos1.github.io/LabWebsite/supporti
 # Create HTML dependency for the D3 library (version 7.3)
 d3 <- htmltools::htmlDependency(
   "d3", "7.3.0",
-  src = c(file= "~/Documents/RA_EcoRRAP/CRiginos1.github.io/LabWebsite/supporting_docs"),  # Specify the source URL for D3 library
+  src = c(file= "~/CRiginos1.github.io/LabWebsite/supporting_docs"),  # Specify the source URL for D3 library
   script = "d3.min.js",  # Specify the JavaScript file to load
   all_files = FALSE
 )
