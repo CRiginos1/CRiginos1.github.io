@@ -1,0 +1,6 @@
+"0","# plot figure
+fig
+"
+"2","Error in copyDependencyToDir(dep, libdir, FALSE) : 
+  Can't copy dependency files that don't exist: './supporting_docs/d3.min.js'
+"
