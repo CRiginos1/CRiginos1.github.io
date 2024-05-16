@@ -18,6 +18,6 @@
     "href": "Stylophora.html",
     "title": "Stylophora",
     "section": "",
-    "text": "Warning: Specifying width/height in layout() is now deprecated.\nPlease specify in ggplotly() or plot_ly()"
+    "text": "Emulating\nhttps://quarto.org/docs/interactive/ojs/\n\ndata = FileAttachment(\"palmer-penguins.csv\").csv({ typed: true })"
   }
 ]
