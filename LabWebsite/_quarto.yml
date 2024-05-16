@@ -3,19 +3,18 @@ project:
   output-dir: ../docs
 
 website:
-  title: "Riginos Research Group, University of Queensland"
+  title: "LabWebsite"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - Stylophora.qmd
+      - about.qmd
 
 format:
   html:
-    theme: zephyr
+    theme: cosmo
     css: styles.css
     toc: true
 
 editor: visual
-
 

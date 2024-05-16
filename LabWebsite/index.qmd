@@ -1,5 +1,11 @@
 ---
-title: "Riginos Research Group"
+title: "LabWebsite"
 ---
 
-Under construction.
+This is a Quarto website.
+
+To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+
+```{r}
+1 + 1
+```
