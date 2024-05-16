@@ -1,0 +1,21 @@
+project:
+  type: website
+  output-dir: ../docs
+
+website:
+  title: "Riginos Research Group, University of Queensland"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+     
+
+format:
+  html:
+    theme: zephyr
+    css: styles.css
+    toc: true
+
+editor: visual
+
+
